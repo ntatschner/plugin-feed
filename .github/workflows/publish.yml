@@ -1,0 +1,40 @@
+# .github/workflows/publish.yml
+name: publish
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'plugins/**'
+      - 'tools/build-catalog/**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build catalog
+        env:
+          PAGES_BASE_URL: https://ntatschner.github.io/plugin-feed
+          FEED_ID: ittoolkit-public
+        run: python tools/build-catalog/build_catalog.py .
+
+      - name: Show catalog summary
+        run: |
+          jq '{schemaVersion, feedId, generatedAt, count: (.entries|length)}' catalog.json
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          keep_files: true
+          publish_branch: gh-pages
