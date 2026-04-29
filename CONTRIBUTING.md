@@ -19,7 +19,6 @@
 - Schema validation
 - Hash & size computation
 - Permission risk classification
-- VirusTotal scan (if `VT_API_KEY` repo secret set)
 - License presence check
 
 ## Auto-merge
