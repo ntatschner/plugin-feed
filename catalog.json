@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "feedId": "ittoolkit-public",
-  "generatedAt": "2026-04-29T14:26:45.530523Z",
+  "generatedAt": "2026-04-29T21:34:12.811624Z",
   "entries": [
     {
       "id": "com.ittoolkit.samples.helloworld",
@@ -12,15 +12,15 @@
       "category": "Other",
       "license": "MIT",
       "iconKey": "package",
-      "requestedPermissions": "None",
+      "requestedPermissions": [],
       "downloadUrl": "https://ntatschner.github.io/plugin-feed/plugins/com.ittoolkit.samples.helloworld/1.0.0/com.ittoolkit.samples.helloworld.zip",
-      "sha256": "995d3a75636871ae3351d52a6406da2f1d308c9aef0dafe094184843e0601cca",
-      "sizeBytes": 23461,
+      "sha256": "fcf0bc83d75a934d86a83249a4d4d9104712f04304a0693719226f3971e3b070",
+      "sizeBytes": 22978,
       "verified": true,
       "permissionRiskLevel": "low",
       "minHostVersion": "1.0",
       "featured": false,
-      "lastUpdated": "2026-04-29T14:26:45.204790Z"
+      "lastUpdated": "2026-04-29T21:34:12.487784Z"
     }
   ]
 }
