@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 2,
+  "feedId": "ittoolkit-public",
+  "generatedAt": "2026-04-29T14:00:09.344046Z",
+  "entries": [
+    {
+      "id": "com.ittoolkit.samples.helloworld",
+      "name": "Hello World",
+      "author": "ITToolkit team",
+      "description": "Smallest possible plugin \u2014 sidebar greeting + settings tab + palette entry.",
+      "version": "1.0.0",
+      "category": "Other",
+      "license": "MIT",
+      "iconKey": "package",
+      "requestedPermissions": "None",
+      "downloadUrl": "https://ntatschner.github.io/plugin-feed/plugins/com.ittoolkit.samples.helloworld/1.0.0/com.ittoolkit.samples.helloworld.zip",
+      "sha256": "995d3a75636871ae3351d52a6406da2f1d308c9aef0dafe094184843e0601cca",
+      "sizeBytes": 23461,
+      "verified": true,
+      "permissionRiskLevel": "low",
+      "minHostVersion": "1.0",
+      "featured": false,
+      "lastUpdated": "2026-04-29T14:00:08.591932Z"
+    }
+  ]
+}
