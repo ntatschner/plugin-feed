@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>ITToolkit Plugin Feed</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --bg: #0e1116; --bg2: #161b22; --bg3: #21262d;
+    --fg: #e6edf3; --fg2: #8b949e; --accent: #58a6ff; --accent2: #1f6feb;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149;
+    --border: #30363d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.55 -apple-system, "Segoe UI", system-ui, sans-serif;
+         background: var(--bg); color: var(--fg); }
+  header { padding: 32px 48px 16px; border-bottom: 1px solid var(--border); background: var(--bg2); }
+  h1 { margin: 0 0 6px; font-size: 24px; }
+  .tagline { color: var(--fg2); margin: 0 0 12px; }
+  .meta { color: var(--fg2); font-size: 12px; }
+  .meta code { color: var(--accent); }
+  main { padding: 24px 48px 64px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--fg2); font-weight: 500; }
+  tr:hover td { background: var(--bg2); }
+  .muted { color: var(--fg2); font-size: 12px; }
+  code { background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, "Cascadia Code", monospace; font-size: 12px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .risk-low  { background: rgba(63,185,80,0.15);  color: var(--green); }
+  .risk-med  { background: rgba(210,153,34,0.15); color: var(--yellow); }
+  .risk-high { background: rgba(248,81,73,0.15);  color: var(--red); }
+  .links a { margin-right: 16px; }
+  footer { padding: 16px 48px; color: var(--fg2); font-size: 12px; border-top: 1px solid var(--border); }
+</style>
+</head><body>
+<header>
+  <h1>ITToolkit Plugin Feed</h1>
+  <p class="tagline">Public catalog of plugins for the ITToolkit Windows admin app.</p>
+  <p class="meta">
+    <span class="links">
+      <a href="catalog.json">catalog.json</a>
+      <a href="https://github.com/ntatschner/plugin-feed">repo</a>
+      <a href="https://github.com/ntatschner/plugin-feed/blob/main/CONTRIBUTING.md">submit a plugin</a>
+    </span>
+  </p>
+  <p class="meta">Feed <code>ittoolkit-public</code> · 1 plugin · generated <code>2026-04-29T14:21:32.634418Z</code></p>
+</header>
+<main>
+  <table>
+    <thead><tr>
+      <th>Plugin</th><th>Version</th><th>Author</th><th>Category</th>
+      <th>Risk</th><th>Permissions</th><th>SHA-256</th><th>Size</th><th>Download</th>
+    </tr></thead>
+    <tbody>
+        <tr>
+          <td><strong>Hello World</strong>
+              <div class="muted">com.ittoolkit.samples.helloworld</div></td>
+          <td>1.0.0</td>
+          <td>ITToolkit team</td>
+          <td>Other</td>
+          <td><span class="badge risk-low">low</span></td>
+          <td class="muted">N, o, n, e</td>
+          <td><code>995d3a756368…</code></td>
+          <td>22.9 KB</td>
+          <td><a href="https://ntatschner.github.io/plugin-feed/plugins/com.ittoolkit.samples.helloworld/1.0.0/com.ittoolkit.samples.helloworld.zip">zip</a></td>
+        </tr>
+    </tbody>
+  </table>
+</main>
+<footer>
+  Configure your ITToolkit host's <code>Plugins.FeedUrl</code> to <code>https://ntatschner.github.io/plugin-feed/catalog.json</code>.
+</footer>
+</body></html>
