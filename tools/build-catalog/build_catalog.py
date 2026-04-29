@@ -31,6 +31,32 @@ def manifest_from_zip(path: Path):
         return None
 
 
+def _normalize_permissions(value):
+    """Coerce a manifest's requestedPermissions field to a clean list[str].
+
+    Real-world manifests have shipped degenerate shapes that the host's
+    tolerant JSON converter handles, but the catalog should publish only
+    the canonical array form so naive consumers (jq, third-party tools,
+    older host versions without the converter) don't choke. Accepts:
+
+    * a list of strings (canonical) — non-string elements and empty
+      strings are dropped
+    * None / missing → []
+    * the literal string "None" (any case) → [] (legacy "no permissions")
+    * an empty string → []
+    * any other non-empty string → single-element list
+    """
+    if value is None:
+        return []
+    if isinstance(value, str):
+        if value == "" or value.lower() == "none":
+            return []
+        return [value]
+    if isinstance(value, list):
+        return [item for item in value if isinstance(item, str) and item != ""]
+    return []
+
+
 def risk_level(perms):
     danger = {"ProcessExec", "FileSystemUser", "Network"}
     perms_set = set(perms or [])
@@ -50,7 +76,7 @@ def build(repo_root: Path):
             if manifest is None:
                 continue
             rel = zip_path.relative_to(repo_root).as_posix()
-            perms = manifest.get("requestedPermissions", [])
+            perms = _normalize_permissions(manifest.get("requestedPermissions"))
             entries.append({
                 "id": manifest["id"],
                 "name": manifest.get("name", manifest["id"]),
