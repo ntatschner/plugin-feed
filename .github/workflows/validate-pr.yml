@@ -1,0 +1,90 @@
+# .github/workflows/validate-pr.yml
+name: validate-pr
+on:
+  pull_request:
+    paths: ['plugins/**']
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Find changed zips
+        id: changed
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          changed=$(git diff --name-only "$base"...HEAD -- 'plugins/**/*.zip' | tr '\n' ' ')
+          echo "zips=$changed" >> "$GITHUB_OUTPUT"
+          echo "Changed zips: $changed"
+
+      - name: Validate each
+        id: validate
+        if: steps.changed.outputs.zips != ''
+        run: |
+          highest_risk=low
+          for z in ${{ steps.changed.outputs.zips }}; do
+            python tools/validate-submission/validate.py "$z"
+          done
+          # Re-derive risk for label step
+          for z in ${{ steps.changed.outputs.zips }}; do
+            level=$(python - "$z" <<'PY'
+          import json, sys, zipfile
+          with zipfile.ZipFile(sys.argv[1]) as zf:
+              m = json.loads(zf.read('plugin.json'))
+          perms = set(m.get('requestedPermissions') or [])
+          danger = {'ProcessExec','FileSystemUser','Network'}
+          if danger.issubset(perms):
+              print('high')
+          elif 'ProcessExec' in perms or 'FileSystemUser' in perms:
+              print('medium')
+          else:
+              print('low')
+          PY
+            )
+            case "$level" in
+              high) highest_risk=high ;;
+              medium) [ "$highest_risk" = "low" ] && highest_risk=medium ;;
+            esac
+          done
+          echo "risk=$highest_risk" >> "$GITHUB_OUTPUT"
+
+      - name: VirusTotal scan
+        if: steps.changed.outputs.zips != ''
+        env:
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        run: |
+          if [ -z "$VT_API_KEY" ]; then
+            echo "::warning::VT_API_KEY not set; skipping VT scan"
+            exit 0
+          fi
+          for z in ${{ steps.changed.outputs.zips }}; do
+            echo "Uploading $z to VT..."
+            id=$(curl -sX POST -H "x-apikey: $VT_API_KEY" -F "file=@$z" \
+                 https://www.virustotal.com/api/v3/files | jq -r .data.id)
+            sleep 30
+            verdict=$(curl -sH "x-apikey: $VT_API_KEY" \
+                      "https://www.virustotal.com/api/v3/analyses/$id" \
+                      | jq -r '.data.attributes.stats.malicious')
+            echo "VT malicious=$verdict for $z"
+            if [ "$verdict" != "null" ] && [ "$verdict" -gt 0 ]; then
+              echo "::error::$z flagged malicious by $verdict engines"
+              exit 1
+            fi
+          done
+
+      - name: Label high-risk
+        if: steps.validate.outputs.risk == 'high'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label needs-human-review
