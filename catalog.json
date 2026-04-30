@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "feedId": "ittoolkit-public",
-  "generatedAt": "2026-04-29T21:34:12.811624Z",
+  "generatedAt": "2026-04-30T21:57:38.284404Z",
   "entries": [
     {
       "id": "com.ittoolkit.samples.helloworld",
@@ -14,13 +14,13 @@
       "iconKey": "package",
       "requestedPermissions": [],
       "downloadUrl": "https://ntatschner.github.io/plugin-feed/plugins/com.ittoolkit.samples.helloworld/1.0.0/com.ittoolkit.samples.helloworld.zip",
-      "sha256": "fcf0bc83d75a934d86a83249a4d4d9104712f04304a0693719226f3971e3b070",
-      "sizeBytes": 22978,
+      "sha256": "57f62e86031ad9ce9ccdbdca55bdf022c162fb31201b4df76900dc5b13046da4",
+      "sizeBytes": 22981,
       "verified": true,
       "permissionRiskLevel": "low",
       "minHostVersion": "1.0",
       "featured": false,
-      "lastUpdated": "2026-04-29T21:34:12.487784Z"
+      "lastUpdated": "2026-04-30T21:57:37.966892Z"
     }
   ]
 }
